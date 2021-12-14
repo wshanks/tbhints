@@ -64,7 +64,7 @@ function makeHint(label, anchor) {
   background-color: yellow !important;
   color: black !important;
   border-color: white !important;
-  border-width: 20px !important;
+  border-width: 2px !important;
   padding: 2pt !important;
   position: absolute !important;
   z-index: 1 !important;
@@ -91,13 +91,19 @@ class HintingStatus {
     this.hintHolder = hintDOM(this.hints);
     // holder for key listener
     this._listener = null;
+    this.input = null;
   }
 
   handleKey(event) {
     console.log(`tbhints: handle ${event.key}`)
     if (event.key.length != 1) {
-      // Ignore modifier key presses
-      return
+      if (["Control", "Alt", "Shift", "Meta"].includes(event.key)) {
+        // Ignore modifier key presses
+        return
+      } else {
+        // Reset for other special keys like Escape
+        this.reset();
+      }
     }
 
     if (event.ctrlKey || event.altKey || event.shiftKey || event.metaKey) {
@@ -117,13 +123,12 @@ class HintingStatus {
       return
     }
 
-    console.log(this.hints)
     if (this.keys in this.hints) {
       browser.runtime.sendMessage({"url": this.hints[this.keys].href});
+      this.reset();
       event.stopImmmediatePropagation();
       event.preventDefault();
     }
-    this.reset();
   }
 
   activate() {
@@ -134,9 +139,25 @@ class HintingStatus {
 
     this.reset();
     this._listener = this.handleKey.bind(this);
-    document.addEventListener('keydown', this._listener);
+    // document.addEventListener('keydown', this._listener);
     // Hack: is there a better way to make sure the key listener can see key events?
-    document.documentElement.focus()
+    // document.documentElement.focus()
+    //
+    this.input = document.createElement("input");
+    this.input.type = "text";
+    this.input.style.cssText = `
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-color: white !important;
+    padding: 2pt !important;
+    position: fixed !important;
+    z-index: 2 !important;
+    `
+    this.hintHolder.appendChild(this.input);
+    this.input.focus();
+    this.input.addEventListener('keydown', this._listener);
+
     for (let hint of this.hintHolder.children) {
       hint.style.display = "";
     }
@@ -145,7 +166,10 @@ class HintingStatus {
   reset() {
     console.log("start tbhints reset")
     this.keys = "";
-    document.removeEventListener("keydown", this._listener);
+    // document.removeEventListener("keydown", this._listener);
+    if (this.input !== null) {
+      this.input.removeEventListener("keydown", this._listener);
+    }
     for (let hint of this.hintHolder.children) {
       console.log(hint.style)
       hint.style.display = "none";

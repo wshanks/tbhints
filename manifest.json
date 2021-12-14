@@ -16,7 +16,7 @@
   ],
   "commands": {
     "trigger-hints": {
-      "suggested_key": { "default": "Ctrl+Shift+K" },
+      "suggested_key": { "default": "Ctrl+Shift+E" },
       "description": "Trigger hints for the current message"
     }
   },
