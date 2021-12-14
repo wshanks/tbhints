@@ -14,8 +14,18 @@ If the message contains links, boxes with one or two letters should appear over 
 Enter one of the strings of letters to open the link with the default web browser.
 Hitting Escape with the input box focused or entering an invalid hint string in the input box will hide the hints and the input box.
 
+### More flexible binding
+
+The MailExtensions API limits command bindings to modifier plus key.
+To trigger hints from a single key, the [tbkeys or tbkeys-lite] extensions (version 2.2 or newer) may be used.
+To do so, the command should be `"memsg:tbhints@addons.thunderbird.net:show-hints"`.
+
 ## Experiments usage
 
 `tbhints` uses an Experiment to focus the hint selection input box on the folder tab.
 Experiments require full access to Thunderbird.
 It would be great to find a convenient way to capture hint input without needing an Experiment.
+
+## External control
+
+Hints can be triggered from another MailExtension by using `browser.runtime.sendMessage()` to send a message with content `"show-hints"` to `tbhints`.

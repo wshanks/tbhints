@@ -13,7 +13,7 @@
   "homepage_url": "https://github.com/wshanks/tbhints",
   "permissions": ["messagesModify"],
   "commands": {
-    "trigger-hints": {
+    "show-hints": {
       "suggested_key": { "default": "Ctrl+Shift+E" },
       "description": "Trigger hints for the current message"
     }

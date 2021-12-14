@@ -26,8 +26,19 @@ async function linkListener(message) {
 }
 browser.runtime.onMessage.addListener(linkListener);
 
-// eslint-disable-next-line no-unused-vars
-browser.commands.onCommand.addListener(async (command) => {
+browser.runtime.onMessageExternal.addListener(
+  // eslint-disable-next-line no-unused-vars
+  (message, sender, sendResponse) => {
+    switch (message) {
+      case "show-hints":
+        triggerHints();
+        break;
+      default:
+    }
+  }
+);
+
+async function triggerHints() {
   // Get current tab
   let tabs = await browser.tabs.query({ active: true, currentWindow: true });
   let tab = tabs[0];
@@ -42,5 +53,15 @@ browser.commands.onCommand.addListener(async (command) => {
   // If tab has a message displayed, hint the message
   if (tab.type == "messageDisplay" || (tab.mailTab && messagePaneFocused)) {
     browser.tabs.sendMessage(tab.id, "show-hints");
+  }
+}
+
+// eslint-disable-next-line no-unused-vars
+browser.commands.onCommand.addListener(async (command) => {
+  switch (command) {
+    case "show-hints":
+      await triggerHints();
+      break;
+    default:
   }
 });
