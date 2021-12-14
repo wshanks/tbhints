@@ -41,10 +41,11 @@ var tbhints = class extends ExtensionCommon.ExtensionAPI {
   getAPI(context) {
     return {
       tbhints: {
-        // FocusMessagePane: focus the message pane of the folder tab if the
-        // folder tab is currently active in the most recent window. Return
-        // true if the message pane was successfully focused.
-        //
+        /**
+         * Focuses the message pane of the folder tab if the folder tab is
+         * currently active in the most recent window.
+         * @return {Boolean} true if the message pane was successfully focused.
+         */
         // eslint-disable-next-line require-await
         FocusMessagePane: async function () {
           let win = Services.wm.getMostRecentWindow("mail:3pane");
