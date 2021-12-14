@@ -4,7 +4,7 @@ tbhints is a Thunderbird extension that allows opening links within messages fro
 
 ## Installation
 
-tbhints can be installed by zipping the contents of the `src/` directory into a file and installing it via the Thunderbird addons manager.
+tbhints can be installed by zipping the contents of the `src/` directory into a file (or running `make tbhints` to produce a xpi file in the `build/` directory) and installing it via the Thunderbird addons manager.
 It can also be installed temporarily from the `Tools->Developer Tools->Debug Addons` page by selecting the `manifest.json` file in the `src/` directory.
 
 ## Usage
