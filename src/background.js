@@ -1,17 +1,17 @@
 /* global browser */
-let contentScript = {js: [{file: "content.js"}]};
+let contentScript = { js: [{ file: "content.js" }] };
 browser.messageDisplayScripts.register(contentScript);
 
 // Listen for message from content script -- it will be an url to open
 async function linkListener(message) {
   await browser.windows.openDefaultBrowser(message.url);
 }
-browser.runtime.onMessage.addListener(linkListener)
+browser.runtime.onMessage.addListener(linkListener);
 
 // eslint-disable-next-line no-unused-vars
 browser.commands.onCommand.addListener(async (command) => {
   // Get current tab
-  let tabs = await browser.tabs.query({active: true, currentWindow: true});
+  let tabs = await browser.tabs.query({ active: true, currentWindow: true });
   let tab = tabs[0];
 
   // If current tab is folder tab, try to focus message pane, so that input box
@@ -22,7 +22,7 @@ browser.commands.onCommand.addListener(async (command) => {
   }
 
   // If tab has a message displayed, hint the message
-  if (tab.type == "messageDisplay" || tab.mailTab && messagePaneFocused) {
+  if (tab.type == "messageDisplay" || (tab.mailTab && messagePaneFocused)) {
     browser.tabs.sendMessage(tab.id, "show-hints");
   }
-})
+});

@@ -9,7 +9,7 @@ const hintLetters = "fjdkslgha";
  *     elements
  */
 function labelAnchors() {
-  let links = document.getElementsByTagName('a');
+  let links = document.getElementsByTagName("a");
   if (links.length == 0) {
     return {};
   }
@@ -20,20 +20,17 @@ function labelAnchors() {
     labels = Array.from(Array(links.length), (_, i) => hintLetters[i]);
   } else {
     // Two letter hints
-    let numLabels = Math.min(links.length, hintLetters.length ** 2)
-    labels = Array.from(
-      Array(numLabels),
-      (_, i) => {
-        [
-          hintLetters[Math.floor(i / hintLetters.length)],
-          hintLetters[i % hintLetters.length]
-        ].join("")
-      }
-    )
+    let numLabels = Math.min(links.length, hintLetters.length ** 2);
+    labels = Array.from(Array(numLabels), (_, i) => {
+      [
+        hintLetters[Math.floor(i / hintLetters.length)],
+        hintLetters[i % hintLetters.length],
+      ].join("");
+    });
   }
 
-  let labeledAnchors = {}
-  for (let idx=0; idx < labels.length; idx++) {
+  let labeledAnchors = {};
+  for (let idx = 0; idx < labels.length; idx++) {
     labeledAnchors[labels[idx]] = links[idx];
   }
 
@@ -69,13 +66,13 @@ function makeHint(label, anchor) {
   flag.textContent = label;
   flag.className = "tbhintsHint";
 
-  const clientRects = anchor.getClientRects()
+  const clientRects = anchor.getClientRects();
   let rect = clientRects[0];
   for (const recti of clientRects) {
-      if (recti.bottom > 0 && recti.right > 0) {
-          rect = recti;
-          break;
-      }
+    if (recti.bottom > 0 && recti.right > 0) {
+      rect = recti;
+      break;
+    }
   }
 
   const top = rect.top > 0 ? rect.top : pad;
@@ -94,10 +91,10 @@ function makeHint(label, anchor) {
   position: absolute !important;
   z-index: 1 !important;
   text-align: center !important;
-  `
+  `;
   flag.style.display = "none";
 
-  return flag
+  return flag;
 }
 
 /** A class to hold the hinting state of the document.
@@ -125,12 +122,12 @@ class HintingStatus {
     // All hints have the same length, so check the length of first one
     let hintLength = Object.keys(this.hints)[0].length;
     if (current.length < hintLength) {
-      return
+      return;
     }
 
     if (current in this.hints) {
       let url = this.hints[current].href;
-      browser.runtime.sendMessage({"url": url});
+      browser.runtime.sendMessage({ url: url });
     }
     // Reset even if not a match if enough characters entered
     this.reset();
@@ -156,7 +153,7 @@ class HintingStatus {
       this.hintHolder = hintDOM(this.hints);
     }
     if (Object.keys(this.hints).length == 0) {
-      return
+      return;
     }
 
     // Reset in case activate triggered multiple times
@@ -173,10 +170,10 @@ class HintingStatus {
     padding: 2pt !important;
     position: fixed !important;
     z-index: 2 !important;
-    `
+    `;
     this.hintHolder.appendChild(input);
-    input.addEventListener('input', this.handleInput.bind(this));
-    input.addEventListener('keydown', this.handleEscape.bind(this));
+    input.addEventListener("input", this.handleInput.bind(this));
+    input.addEventListener("keydown", this.handleEscape.bind(this));
     input.focus();
 
     // Reveal hints
@@ -214,4 +211,4 @@ browser.runtime.onMessage.addListener(
   (_message, _sender, _sendMessage) => {
     status.activate();
   }
-)
+);

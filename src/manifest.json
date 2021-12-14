@@ -11,9 +11,7 @@
   "author": "Will Shanks",
   "version": "0.0.1",
   "homepage_url": "https://github.com/wshanks/tbhints",
-  "permissions": [
-    "messagesModify"
-  ],
+  "permissions": ["messagesModify"],
   "commands": {
     "trigger-hints": {
       "suggested_key": { "default": "Ctrl+Shift+E" },

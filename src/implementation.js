@@ -6,7 +6,6 @@ var { ExtensionCommon } = ChromeUtils.import(
 );
 var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 
-
 // eslint-disable-next-line no-unused-vars
 var tbhints = class extends ExtensionCommon.ExtensionAPI {
   onShutdown(isAppShutdown) {
@@ -32,7 +31,8 @@ var tbhints = class extends ExtensionCommon.ExtensionAPI {
         FocusMessagePane: async function () {
           let win = Services.wm.getMostRecentWindow("mail:3pane");
           let tabmail = win.document.getElementById("tabmail");
-          let folderTabActive = tabmail.selectedTab.tabNode.mode.type == "folder";
+          let folderTabActive =
+            tabmail.selectedTab.tabNode.mode.type == "folder";
 
           if (folderTabActive && !win.IsMessagePaneCollapsed()) {
             win.SetFocusMessagePane();
