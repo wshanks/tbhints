@@ -12,7 +12,11 @@
   "version": "0.0.1",
   "homepage_url": "https://github.com/wshanks/tbhints",
   "permissions": [
-    "messagesModify"
+    "messagesModify",
+    "tabs",
+    "compose",
+    "activeTab",
+    "<all_urls>"
   ],
   "commands": {
     "trigger-hints": {

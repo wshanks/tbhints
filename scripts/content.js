@@ -94,41 +94,18 @@ class HintingStatus {
     this.input = null;
   }
 
-  handleKey(event) {
+  handleInput(event) {
     console.log(`tbhints: handle ${event.key}`)
-    if (event.key.length != 1) {
-      if (["Control", "Alt", "Shift", "Meta"].includes(event.key)) {
-        // Ignore modifier key presses
-        return
-      } else {
-        // Reset for other special keys like Escape
-        this.reset();
-      }
-    }
-
-    if (event.ctrlKey || event.altKey || event.shiftKey || event.metaKey) {
-      this.reset();
-      return
-    }
-
-    if (hintLetters.indexOf(event.key) == -1) {
-      this.reset();
-      return
-    }
+    let current = event.target.value.toLowerCase();
     
-    this.keys = this.keys + event.key;
-    if (this.keys.length < this.hintLength) {
-      event.stopImmmediatePropagation();
-      event.preventDefault();
+    if (current.length < this.hintLength) {
       return
     }
 
     if (this.keys in this.hints) {
       browser.runtime.sendMessage({"url": this.hints[this.keys].href});
-      this.reset();
-      event.stopImmmediatePropagation();
-      event.preventDefault();
     }
+    this.reset();
   }
 
   activate() {
@@ -138,7 +115,7 @@ class HintingStatus {
     }
 
     this.reset();
-    this._listener = this.handleKey.bind(this);
+    this._listener = this.handleInput.bind(this);
     // document.addEventListener('keydown', this._listener);
     // Hack: is there a better way to make sure the key listener can see key events?
     // document.documentElement.focus()
@@ -156,7 +133,7 @@ class HintingStatus {
     `
     this.hintHolder.appendChild(this.input);
     this.input.focus();
-    this.input.addEventListener('keydown', this._listener);
+    this.input.addEventListener('input', this._listener);
 
     for (let hint of this.hintHolder.children) {
       hint.style.display = "";
@@ -168,7 +145,8 @@ class HintingStatus {
     this.keys = "";
     // document.removeEventListener("keydown", this._listener);
     if (this.input !== null) {
-      this.input.removeEventListener("keydown", this._listener);
+      this.input.removeEventListener("input", this._listener);
+      this.hintHolder.removeChild(this.input);
     }
     for (let hint of this.hintHolder.children) {
       console.log(hint.style)
@@ -185,3 +163,4 @@ browser.runtime.onMessage.addListener(
     status.activate();
   }
 )
+console.log("script run")
