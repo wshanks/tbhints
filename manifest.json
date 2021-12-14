@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "applications": {
+    "gecko": {
+      "id": "tbhints@addons.thunderbird.net",
+      "strict_min_version": "91.0"
+    }
+  },
+  "name": "tbhints",
+  "description": "Links for Thunderbird messages",
+  "author": "Will Shanks",
+  "version": "0.0.1",
+  "homepage_url": "https://github.com/wshanks/tbhints",
+  "permissions": [
+    "messagesModify"
+  ],
+  "commands": {
+    "trigger-hints": {
+      "suggested_key": { "default": "Ctrl+Shift+K" },
+      "description": "Trigger hints for the current message"
+    }
+  },
+  "background": {
+    "scripts": ["background.js"]
+  }
+}

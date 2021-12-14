@@ -1,0 +1,24 @@
+{
+  "name": "tbhints",
+  "version": "0.0.1",
+  "description": "Thunderbird link hints",
+  "main": "index.js",
+  "scripts": {
+    "test": "eslint *.js scripts/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wshanks/tbhints.git"
+  },
+  "keywords": [],
+  "author": "Will Shanks",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/wshanks/tbhints/issues"
+  },
+  "homepage": "https://github.com/wshanks/tbhints#readme",
+  "devDependencies": {
+    "eslint": "latest",
+    "prettier": "latest"
+  }
+}
