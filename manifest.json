@@ -12,11 +12,7 @@
   "version": "0.0.1",
   "homepage_url": "https://github.com/wshanks/tbhints",
   "permissions": [
-    "messagesModify",
-    "tabs",
-    "compose",
-    "activeTab",
-    "<all_urls>"
+    "messagesModify"
   ],
   "commands": {
     "trigger-hints": {
@@ -26,5 +22,15 @@
   },
   "background": {
     "scripts": ["background.js"]
+  },
+  "experiment_apis": {
+    "tbhints": {
+      "schema": "schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "paths": [["tbhints"]],
+        "script": "implementation.js"
+      }
+    }
   }
 }

@@ -1,30 +1,28 @@
 /* global browser */
-let contentScript = {js: [{file: "scripts/content.js"}]};
+let contentScript = {js: [{file: "content.js"}]};
 browser.messageDisplayScripts.register(contentScript);
 
+// Listen for message from content script -- it will be an url to open
 async function linkListener(message) {
   await browser.windows.openDefaultBrowser(message.url);
 }
-
 browser.runtime.onMessage.addListener(linkListener)
 
-browser.commands.onCommand.addListener(async (command) => { // eslint-disable-line no-unused-vars
+// eslint-disable-next-line no-unused-vars
+browser.commands.onCommand.addListener(async (command) => {
+  // Get current tab
   let tabs = await browser.tabs.query({active: true, currentWindow: true});
-  console.log(tabs[0]);
-  browser.tabs.sendMessage(tabs[0].id, "show-hints");
-  let win = await browser.windows.create({
-    type: "normal",
-    titlePreface: "tbhints test",
-    width: 200,
-    height: 20,
-    url: browser.runtime.getURL("") + "input.html"
-  });
-  tabs = await browser.tabs.query({
-    windowId: win.id,
-    active: true,
-  });
-  await browser.tabs.executeScript(
-    tabs[0].id,
-    {code: 'document.querySelector("#inputbox")[0].focus();'}
-  );
+  let tab = tabs[0];
+
+  // If current tab is folder tab, try to focus message pane, so that input box
+  // can get focus and capture hint selection
+  let messagePaneFocused = false;
+  if (tab.mailTab) {
+    messagePaneFocused = await browser.tbhints.FocusMessagePane();
+  }
+
+  // If tab has a message displayed, hint the message
+  if (tab.type == "messageDisplay" || tab.mailTab && messagePaneFocused) {
+    browser.tabs.sendMessage(tab.id, "show-hints");
+  }
 })

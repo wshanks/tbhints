@@ -1,0 +1,15 @@
+[
+  {
+    "namespace": "tbhints",
+    "functions": [
+      {
+        "name": "FocusMessagePane",
+        "type": "function",
+        "description": "Focus message pane when 3-pane folder view tab is active",
+        "async": true,
+        "parameters": []
+      }
+    ],
+    "types": []
+  }
+]
