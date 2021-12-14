@@ -4,7 +4,7 @@
   "description": "Thunderbird link hints",
   "main": "index.js",
   "scripts": {
-    "test": "eslint *.js scripts/*.js"
+    "test": "eslint src/*.js"
   },
   "repository": {
     "type": "git",
