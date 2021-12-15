@@ -7,7 +7,7 @@ all: tbhints
 
 tbhints: $(BLDDIR)/tbhints.xpi
 
-SRC_FILES = $(wildcard src/*.json) $(wildcard src/*.js)
+SRC_FILES = $(wildcard src/*.json) $(wildcard src/*.js) src/LICENSE
 ADDON_FILES = $(subst src/,,$(SRC_FILES))
 
 $(BLDDIR)/tbhints.xpi: $(SRC_FILES)
