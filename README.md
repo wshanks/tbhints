@@ -17,13 +17,13 @@ Hitting Escape with the input box focused or entering an invalid hint string in 
 ### More flexible binding
 
 The MailExtensions API limits command bindings to modifier plus key.
-To trigger hints from a single key, the [tbkeys or tbkeys-lite] extensions (version 2.2 or newer) may be used.
+To trigger hints from a single key (or a different combination of keys), the [tbkeys or tbkeys-lite](https://github.com/wshanks/tbkeys) extensions (version 2.2 or newer) may be used.
 To do so, the command should be `"memsg:tbhints@addons.thunderbird.net:show-hints"`.
 
 ## Experiments usage
 
-`tbhints` uses an Experiment to focus the hint selection input box on the folder tab.
-Experiments require full access to Thunderbird.
+`tbhints` uses an [Experiment](https://developer.thunderbird.net/add-ons/mailextensions/experiments) to focus the hint selection input box on the folder tab.
+Experiments require full access to Thunderbird and present a warning about this at extension installation time.
 It would be great to find a convenient way to capture hint input without needing an Experiment.
 
 ## External control
