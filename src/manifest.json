@@ -3,13 +3,14 @@
   "applications": {
     "gecko": {
       "id": "tbhints@addons.thunderbird.net",
-      "strict_min_version": "91.0"
+      "strict_min_version": "91.0",
+      "strict_max_version": "*"
     }
   },
   "name": "tbhints",
   "description": "Links for Thunderbird messages",
   "author": "Will Shanks",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage_url": "https://github.com/wshanks/tbhints",
   "permissions": ["messagesModify"],
   "commands": {
