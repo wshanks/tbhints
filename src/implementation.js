@@ -17,12 +17,11 @@
  */
 
 "use strict";
-/* global ChromeUtils */
+/* global ChromeUtils, Services */
 
 var { ExtensionCommon } = ChromeUtils.import(
   "resource://gre/modules/ExtensionCommon.jsm"
 );
-var { Services } = ChromeUtils.import("resource://gre/modules/Services.jsm");
 
 // eslint-disable-next-line no-unused-vars
 var tbhints = class extends ExtensionCommon.ExtensionAPI {
