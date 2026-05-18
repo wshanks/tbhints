@@ -1,6 +1,6 @@
 {
   "name": "tbhints",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Thunderbird link hints",
   "main": "index.js",
   "scripts": {
