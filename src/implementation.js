@@ -19,8 +19,8 @@
 "use strict";
 /* global ChromeUtils, Services */
 
-var { ExtensionCommon } = ChromeUtils.import(
-  "resource://gre/modules/ExtensionCommon.jsm"
+var { ExtensionCommon } = ChromeUtils.importESModule(
+  "resource://gre/modules/ExtensionCommon.sys.mjs"
 );
 
 // eslint-disable-next-line no-unused-vars
@@ -50,14 +50,28 @@ var tbhints = class extends ExtensionCommon.ExtensionAPI {
           let win = Services.wm.getMostRecentWindow("mail:3pane");
           let tabmail = win.document.getElementById("tabmail");
           let folderTabActive =
-            tabmail.selectedTab.tabNode.mode.type == "folder";
+            tabmail.currentTabInfo.mode.name == "mail3PaneTab";
 
-          if (folderTabActive && !win.IsMessagePaneCollapsed()) {
-            win.SetFocusMessagePane();
-            return true;
+          if (!folderTabActive) {
+            return false;
           }
 
-          return false;
+          // In modern Thunderbird, the 3-pane layout lives in about3Pane
+          let about3Pane =
+            tabmail.currentAbout3Pane ||
+            tabmail.getBrowserForTab(tabmail.selectedTab)?.contentWindow;
+
+          if (!about3Pane) {
+            return false;
+          }
+
+          let paneLayout = about3Pane.paneLayout;
+          if (!paneLayout || paneLayout.messagePaneSplitter.isCollapsed) {
+            return false;
+          }
+
+          about3Pane.messagePane.focus();
+          return true;
         },
       },
     };

@@ -46,12 +46,12 @@ async function triggerHints() {
   // If current tab is folder tab, try to focus message pane, so that input box
   // can get focus and capture hint selection
   let messagePaneFocused = false;
-  if (tab.mailTab) {
+  if (tab.type == "mail") {
     messagePaneFocused = await browser.tbhints.FocusMessagePane();
   }
 
   // If tab has a message displayed, hint the message
-  if (tab.type == "messageDisplay" || (tab.mailTab && messagePaneFocused)) {
+  if (tab.type == "messageDisplay" || (tab.type == "mail" && messagePaneFocused)) {
     browser.tabs.sendMessage(tab.id, "show-hints");
   }
 }
