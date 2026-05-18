@@ -20,7 +20,7 @@ $(BLDDIR)/tbhints-atn.xpi: $(SRC_FILES)
 	rm -f $@ $(dir $@)/atn
 	@mkdir -p $(dir $@)
 	cp -r src $(dir $@)/atn
-	sed -i 's/\( *"strict_max_version": \)\(.*\)$$/\1"103.0"/' $(dir $@)/atn/manifest.json
+	sed -i 's/\( *"strict_max_version": \)\(.*\)$$/\1"152.0"/' $(dir $@)/atn/manifest.json
 	cd $(dir $@)/atn; zip -FSr $(ABS_BLDDIR)/tbhints-atn.xpi $(ADDON_FILES)
 
 lint:
