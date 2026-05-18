@@ -39,12 +39,12 @@ function labelAnchors() {
   } else {
     // Two letter hints
     let numLabels = Math.min(links.length, hintLetters.length ** 2);
-    labels = Array.from(Array(numLabels), (_, i) => {
+    labels = Array.from(Array(numLabels), (_, i) => 
       [
         hintLetters[Math.floor(i / hintLetters.length)],
         hintLetters[i % hintLetters.length],
-      ].join("");
-    });
+      ].join("")
+    );
   }
 
   let labeledAnchors = {};
